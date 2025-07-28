@@ -1,0 +1,26 @@
+
+name: "Build & Publish"
+on:
+  push:
+    branches:
+      - main
+      - release/**
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write      # Required for GHCR
+  id-token: write      # Required for Google Artifact Registry (GAR)
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current commit
+        uses: actions/checkout@v4
+      - name: Build and push image for amd64
+        uses: getsentry/action-build-and-push-images@main
+        with:
+          image_name: 'sentry-test-ubuntu-20.04-amd64'
+          dockerfile_path: './ubuntu-20.04.Dockerfile'
+          ghcr: true
