@@ -17,6 +17,7 @@ apt-get install -y --no-install-recommends \
   build-essential \
   ca-certificates \
   curl \
+  gnupg \
   autoconf \
   automake \
   bc \
@@ -26,9 +27,18 @@ apt-get install -y --no-install-recommends \
   git \
   git-lfs \
   libclang-dev \
-  libtool
+  libtool 
+
+# install yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+apt-get update
+apt-get install -y --no-install-recommends yarn
+
 apt-get clean
 rm -rf /var/lib/apt/lists/*
+
 EOF
 
 CMD ["/bin/bash"]
